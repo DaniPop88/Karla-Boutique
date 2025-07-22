@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Summary | Karla Sambere Urban Boutique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your order and complete checkout for Karla Sambere Urban Boutique. Confirm details and select your payment method for a quick, secure transaction.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #83004e;
+            --accent: #c1037e;
+            --white: #fff;
+            --section-bg: #fff8fc;
+            --border: #e4c7dc;
+            --button: #c1037e;
+            --button-hover: #83004e;
+            --error: #d32f2f;
+            --success: #388e3c;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--section-bg);
+            font-family: 'Nunito', 'Montserrat', Arial, sans-serif;
+            color: #222;
+            margin: 0;
+        }
+        header {
+            background: var(--main-bg);
+            color: #fff;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(131,0,78,0.11);
+        }
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .logo-img {
+            height: 52px;
+            width: 52px;
+            border-radius: 12px;
+            background: #fff;
+            object-fit: contain;
+            box-shadow: 0 2px 8px rgba(131,0,78,0.12);
+        }
+        .navbar-brand {
+            font-family: 'Montserrat', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+        .summary-section {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(131,0,78,0.07);
+            border: 1px solid var(--border);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-family: 'Montserrat', serif;
+            font-weight: 700;
+            color: var(--main-bg);
+            letter-spacing: 1px;
+            margin-bottom: 1.3rem;
+        }
+        .order-details {
+            background: var(--section-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .order-details h3 {
+            font-size: 1.1rem;
+            color: var(--main-bg);
+            margin: 0 0 .7rem 0;
+            font-weight: 700;
+        }
+        .order-products {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+        .order-products li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+            color: #222;
+        }
+        .order-products li:last-child {
+            border-bottom: none;
+        }
+        .order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.07rem;
+            margin: 0.3rem 0;
+        }
+        .order-summary-row.total {
+            font-size: 1.17rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .customer-info {
+            margin-bottom: 1.2rem;
+        }
+        .customer-info label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--main-bg);
+        }
+        .customer-info input, .customer-info select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+        }
+        .payment-methods {
+            margin-bottom: 1.5rem;
+        }
+        .payment-methods label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--main-bg);
+        }
+        .payment-methods select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .checkout-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 22px;
+            padding: 0.7rem 2.2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.18s;
+            margin-top: .7rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(131,0,78,0.13);
+            display: block;
+            width: 100%;
+        }
+        .checkout-btn:hover, .checkout-btn:focus {
+            background: var(--main-bg);
+            color: var(--accent);
+        }
+        .confirmation {
+            display: none;
+            padding: 1.4rem 1rem;
+            background: #e6fff3;
+            border: 1px solid #b6e5c0;
+            border-radius: 10px;
+            font-size: 1.08rem;
+            color: var(--success);
+            margin: 1.2rem 0;
+        }
+        .confirmation.active {
+            display: block;
+        }
+        .confirmation strong {
+            color: var(--main-bg);
+            font-size: 1.18rem;
+        }
+        .instructions {
+            margin: 1.2rem 0 0 0;
+            font-size: 1.01rem;
+            color: #333;
+            background: #fcf7fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        @media (max-width: 700px) {
+            .summary-section {
+                max-width: 98vw;
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .order-details h3 {
+                font-size: 1rem;
+            }
+            .checkout-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+            }
+        }
+        footer {
+            background: var(--main-bg);
+            color: var(--white);
+            padding: 2.1rem 1rem 1rem 1rem;
+            margin-top: 2.2rem;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+        .footer-brand, .footer-links, .footer-contact, .footer-info {
+            flex: 1 1 180px;
+            min-width: 180px;
+            margin-bottom: 1.2rem;
+        }
+        .footer-logo {
+            height: 38px;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            background: #fff;
+            object-fit: contain;
+        }
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            margin-right: 1.2rem;
+            font-weight: 600;
+            font-size: 0.97rem;
+            letter-spacing: 1px;
+        }
+        .footer-links a:hover {
+            color: var(--footer-accent);
+            text-decoration: underline;
+        }
+        .footer-contact {
+            font-size: 0.97rem;
+        }
+        .footer-info {
+            font-size: 0.87rem;
+            color: #f8f8f8;
+        }
+        @media (max-width: 700px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Demo product list (can be replaced with dynamic data)
+            const orderProducts = [
+                { name: 'Oversized Graphic Tee', qty: 2, price: 599.00 },
+                { name: 'Handmade Tote Bag', qty: 1, price: 350.00 },
+                { name: 'Chunky Sneakers', qty: 1, price: 1299.00 }
+            ];
+            const orderProductsList = document.getElementById('order-products-list');
+            const orderSubtotal = document.getElementById('order-subtotal');
+            const orderShipping = document.getElementById('order-shipping');
+            const orderTotal = document.getElementById('order-total');
+            let subtotal = 0;
+            orderProducts.forEach(prod => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${prod.name} ×${prod.qty}</span><span>₱${(prod.price * prod.qty).toFixed(2)}</span>`;
+                orderProductsList.appendChild(li);
+                subtotal += prod.price * prod.qty;
+            });
+            orderSubtotal.textContent = '₱' + subtotal.toFixed(2);
+            // Free shipping for orders ₱1,500 and up
+            let shipping = subtotal >= 1500 ? 0 : 120;
+            orderShipping.textContent = shipping === 0 ? 'Free' : '₱' + shipping.toFixed(2);
+            orderTotal.textContent = '₱' + (subtotal + shipping).toFixed(2);
+
+            // Form submit logic
+            const checkoutForm = document.getElementById('checkout-form');
+            const confirmationBox = document.getElementById('confirmation');
+            checkoutForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                confirmationBox.classList.add('active');
+                window.scrollTo({ top: confirmationBox.offsetTop - 30, behavior: "smooth" });
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="navbar-logo">
+                <img src="image/LOGO.png" alt="Karla Sambere Urban Boutique Logo" class="logo-img">
+                <span class="navbar-brand">KARLA SAMBERE</span>
+            </div>
+        </div>
+    </header>
+    <section class="summary-section">
+        <div class="section-title">Order Overview</div>
+        <form id="checkout-form" autocomplete="off">
+            <div class="order-details">
+                <h3>Your Items</h3>
+                <ul class="order-products" id="order-products-list"></ul>
+                <div class="order-summary-row">
+                    <span>Subtotal</span>
+                    <span id="order-subtotal">₱0.00</span>
+                </div>
+                <div class="order-summary-row">
+                    <span>Shipping</span>
+                    <span id="order-shipping">₱0.00</span>
+                </div>
+                <div class="order-summary-row total">
+                    <span>Total</span>
+                    <span id="order-total">₱0.00</span>
+                </div>
+            </div>
+            <div class="customer-info">
+                <label for="customer-name">Full Name</label>
+                <input type="text" id="customer-name" name="customer-name" required placeholder="e.g. Maria Santos">
+                <label for="customer-phone">Mobile Number</label>
+                <input type="tel" id="customer-phone" name="customer-phone" required placeholder="+63 9XX XXX XXXX">
+                <label for="customer-email">Email Address</label>
+                <input type="email" id="customer-email" name="customer-email" required placeholder="your@email.com">
+                <label for="customer-address">Delivery Address</label>
+                <input type="text" id="customer-address" name="customer-address" required placeholder="Street, Barangay, City">
+            </div>
+            <div class="payment-methods">
+                <label for="payment-method">Select Payment Method</label>
+                <select id="payment-method" name="payment-method" required>
+                    <option value="">-- Choose --</option>
+                    <option value="GCash">GCash</option>
+                    <option value="BDO">BDO Bank Transfer</option>
+                    <option value="BPI">BPI Bank Transfer</option>
+                    <option value="COD">Cash on Delivery (Metro Manila only)</option>
+                </select>
+            </div>
+            <button class="checkout-btn" type="submit">Submit Order</button>
+            <div class="instructions">
+                <strong>How it works:</strong>
+                <ul style="padding-left:1.2rem; margin:0;">
+                    <li>After submitting, our boutique team will promptly contact you to confirm your order details, including color preferences, stock availability, and special requests.</li>
+                    <li>Once details are verified, you'll receive a secure payment link based on your selected payment method.</li>
+                    <li>To ensure your order is reserved, please complete your payment within <b>24 hours</b> of receiving the payment link.</li>
+                    <li>If payment is not received within the time frame, your order will be automatically cancelled.</li>
+                </ul>
+                <div style="margin-top:0.8rem;">For questions or assistance, our team is ready to help. Thank you for choosing Karla Sambere Urban Boutique!</div>
+            </div>
+            <div class="confirmation" id="confirmation">
+                <strong>Order Submitted Successfully!</strong><br><br>
+                Thank you for your order. One of our friendly team members will reach out shortly to confirm all details including product colors, availability, and any specific requests. Please review and verify your order information during this process.<br><br>
+                Once confirmed, we'll send you a payment link based on your chosen method. Kindly complete payment within <b>24 hours</b> to secure your items. Orders not paid within this period may be automatically cancelled.<br><br>
+                If you need help, just reply to our message. We look forward to styling you soon!
+            </div>
+        </form>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="image/LOGO.png" alt="Karla Sambere Urban Boutique Logo" class="footer-logo">
+                <div style="font-weight:700; font-size:1.07rem;">Karla Sambere Urban Boutique</div>
+                <div style="font-size:0.98rem;">Makati style, Filipino soul.</div>
+            </div>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund-policy.html">Refund Policy</a>
+            </div>
+            <div class="footer-contact">
+                <b>Address:</b> #58 P. Burgos Street, Barangay Poblacion, Makati<br>
+                <b>Phone:</b> +63 908 123 4765<br>
+                <b>Email:</b> contact@karlasambere-boutique.com<br>
+                <b>Hours:</b> Mon–Sat: 10AM–8PM, Sun: 12PM–6PM
+            </div>
+            <div class="footer-info">
+                <div><b>Business Registration No.:</b> 0256173-MKT</div>
+                <div><b>VAT Registered (TIN):</b> 345-892-711-000</div>
+                <div><b>DTI Permit #:</b> 2020-0824-MKT-BTQ</div>
+                <div>Barangay Clearance and Makati City Business Permit compliant</div>
+            </div>
+        </div>
+        <div style="text-align:center; font-size:0.85rem; margin-top:1rem; color:#e0e0e0;">
+            &copy; 2025 Karla Sambere Urban Boutique. All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>
